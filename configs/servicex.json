@@ -1,0 +1,22 @@
+{
+"service": "serviceX",
+"graphite_url": "http://localhost",
+"interval": "5minute",
+"no_data": "normal",
+"normal_handlers": ["log"],
+"critical_handlers": ["log", "http"],
+"warning_handlers": ["log", "http"],
+"smtp": {
+    "from": "beacon@server.org",
+    "to": ["samit04@gmail.com"]
+},
+"http": {
+        "url": "http://localhost:9093/api/v1/alerts",
+        "method": "POST"
+},
+"alerts": [
+        {"name": "Load Avg",
+        "format": "none",
+        "query": "aliasByNode(service.TAP.servers.*.loadavg_1, 3)",
+        "rules": ["critical: >= 4", "warning: >= 2"] }
+]}
