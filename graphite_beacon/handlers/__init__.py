@@ -42,10 +42,10 @@ class AbstractHandler(_.with_metaclass(HandlerMeta)):
         self.init_handler()
         LOGGER.debug('Handler "%s" has inited: %s', self.name, self.options)
 
-    def get_short(self, level, alert, value, target=None, ntype=None, rule=None):
+    def get_short(self, service, level, alert, value, target=None, ntype=None, rule=None):
         tmpl = TEMPLATES[ntype]['short']
         return tmpl.generate(
-            level=level, reactor=self.reactor, alert=alert, value=value, target=target).strip()
+            service=service, level=level, reactor=self.reactor, alert=alert, value=value, target=target).strip()
 
     def init_handler(self):
         """ Init configuration here."""

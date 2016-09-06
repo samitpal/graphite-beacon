@@ -50,6 +50,7 @@ class Reactor(object):
         'default_nan_value': 0,
         'ignore_nan': False,
         'loading_error': 'critical',
+        'service': None,
         'alerts': []
     }
 
@@ -102,10 +103,10 @@ class Reactor(object):
                     config = loader(source)
                     self.options.get('alerts').extend(config.pop("alerts", []))
                     self.options.update(config)
-
+                assert (self.options.get('service')), 'service field is required'
             except (IOError, ValueError):
                 LOGGER.error('Invalid config file: %s' % config)
-
+        LOGGER.debug(self.options)
     def reinit_handlers(self, level='warning'):
         for name in self.options['%s_handlers' % level]:
             try:
@@ -133,7 +134,7 @@ class Reactor(object):
             os.unlink(self.options.get('pidfile'))
         LOGGER.info('Reactor has stopped')
 
-    def notify(self, level, alert, value, target=None, ntype=None, rule=None):
+    def notify(self, service, level, alert, value, target=None, ntype=None, rule=None):
         """ Provide the event to the handlers. """
 
         LOGGER.info('Notify %s:%s:%s:%s', level, alert, value, target or "")
@@ -142,7 +143,7 @@ class Reactor(object):
             ntype = alert.source
 
         for handler in self.handlers.get(level, []):
-            handler.notify(level, alert, value, target=target, ntype=ntype, rule=rule)
+            handler.notify(service, level, alert, value, target=target, ntype=ntype, rule=rule)
 
 _LOG_LEVELS = {
     'DEBUG': logging.DEBUG,

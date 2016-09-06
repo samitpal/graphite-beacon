@@ -220,7 +220,9 @@ class BaseAlert(_.with_metaclass(AlertFabric)):
             return False
 
         self.state[target] = level
-        return self.reactor.notify(level, self, value, target=target, ntype=ntype, rule=rule)
+        LOGGER.debug(self.reactor.options.get('service'))
+        return self.reactor.notify(self.reactor.options.get('service'), level,
+                self, value, target=target, ntype=ntype, rule=rule)
 
     def load(self):
         """Load from remote."""
