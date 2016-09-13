@@ -36,5 +36,5 @@ class HttpHandler(AbstractHandler):
 	# alertmanager format
 	data = [{'labels': data}]
 	body = json.dumps(data)
-	LOGGER.debug(body)
+ 	#LOGGER.debug(body)
         yield self.client.fetch(self.url, method=self.method, body=body)

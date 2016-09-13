@@ -1,7 +1,8 @@
 {
-"service": "serviceY",
+"service": "servicey",
 "graphite_url": "http://localhost",
 "interval": "5minute",
+"repeat_interval": "5minute",
 "no_data": "normal",
 "normal_handlers": ["log"],
 "critical_handlers": ["log", "http"],
@@ -15,7 +16,7 @@
         "method": "POST"
 },
 "alerts": [
-        {"name": "Load Avg",
+        {"name": "Load Avg serviceY",
         "format": "none",
         "query": "aliasByNode(service.TAP.servers.*.loadavg_1, 3)",
         "rules": ["critical: >= 4", "warning: >= 2"] }

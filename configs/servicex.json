@@ -1,7 +1,8 @@
 {
-"service": "serviceX",
+"service": "servicex",
 "graphite_url": "http://localhost",
-"interval": "5minute",
+"interval": "10minute",
+"repeat_interval": "5minute",
 "no_data": "normal",
 "normal_handlers": ["log"],
 "critical_handlers": ["log", "http"],
@@ -18,5 +19,10 @@
         {"name": "Load Avg",
         "format": "none",
         "query": "aliasByNode(service.TAP.servers.*.loadavg_1, 3)",
-        "rules": ["critical: >= 4", "warning: >= 2"] }
+        "rules": ["critical: >= 4", "warning: >= 2"] },
+
+        {"name": "Disk Full",
+        "format": "none",
+        "query": "aliasByNode(service.TAP.servers.*.df-root, 3)",
+        "rules": ["critical: >= 80", "warning: >= 60"] }
 ]}
